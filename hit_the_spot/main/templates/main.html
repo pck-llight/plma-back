@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>노래방 앱</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <!-- 상단 바 -->
+    <header>
+        <div class="logo">
+            <img src="logo.png" alt="앱 로고">
+        </div>
+        <div class="menu">
+            <button class="hamburger" onclick="toggleMenu()">☰</button>
+        </div>
+    </header>
+
+    <!-- 검색창과 플레이리스트 -->
+    <main>
+        <div class="search">
+            <input type="text" id="search" placeholder="노래 검색">
+        </div>
+
+        <div class="playlist">
+            <h2>최근 플레이리스트</h2>
+            <ul id="playlist">
+                <!-- 플레이리스트 항목이 여기에 동적으로 추가됩니다 -->
+            </ul>
+        </div>
+    </main>
+
+    <!-- 메뉴 (햄버거 버튼 클릭시 열림) -->
+    <nav id="menu" class="hidden">
+        <ul>
+            <li><a href="#">로그인</a></li>
+            <li><a href="#">내 플레이리스트</a></li>
+            <li><a href="#">설정</a></li>
+        </ul>
+    </nav>
+
+    <style>
+        /* 기본적인 스타일링 */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+        header {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+        }
+        .logo img {
+            height: 40px;
+        }
+        .hamburger {
+            font-size: 30px;
+            background: none;
+            border: none;
+            color: white;
+        }
+        .search input {
+            width: 80%;
+            padding: 10px;
+            margin: 20px 0;
+            font-size: 16px;
+        }
+        .playlist {
+            padding: 20px;
+        }
+        .playlist h2 {
+            margin-bottom: 10px;
+        }
+        .playlist ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .playlist li {
+            background-color: #fff;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        nav {
+            background-color: #333;
+            color: white;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 250px;
+            height: 100%;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+        nav ul {
+            padding: 20px;
+        }
+        nav ul li {
+            margin: 20px 0;
+        }
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        nav.hidden {
+            transform: translateX(100%);
+        }
+        nav.visible {
+            transform: translateX(0);
+        }
+    </style>
+
+    <script>
+        // 햄버거 메뉴 토글
+        function toggleMenu() {
+            const menu = document.getElementById('menu');
+            menu.classList.toggle('visible');
+        }
+
+        // 플레이리스트 항목 추가 (최신순)
+        const playlist = [
+            "노래 1",
+            "노래 2",
+            "노래 3",
+            "노래 4",
+            "노래 5",
+            "노래 6",
+            "노래 7",
+            "노래 8",
+            "노래 9",
+            "노래 10"
+        ];
+
+        function loadPlaylist() {
+            const playlistElement = document.getElementById('playlist');
+            playlistElement.innerHTML = ''; // 기존 목록 초기화
+            playlist.slice(0, 10).forEach(song => {
+                const listItem = document.createElement('li');
+                listItem.textContent = song;
+                playlistElement.appendChild(listItem);
+            });
+        }
+
+        // 페이지 로드 시 플레이리스트 로드
+        window.onload = loadPlaylist;
+    </script>
+</body>
+</html>
