@@ -12,7 +12,6 @@ def index(request):
 
 api.add_router("db", db_router)
 
-
 urlpatterns = [
     path("", api.urls),
     path('admin/', admin.site.urls),

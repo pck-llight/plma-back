@@ -49,36 +49,43 @@
 # print(json_results)
 
 
-
 import requests
 from bs4 import BeautifulSoup
 
-# URL 설정 및 폼 데이터 정의
-url = "https://www.tjmedia.com/tjsong/song_search_list.asp"
-data = {
-    "searchOrderItem": "",
-    "searchOrderType": "",
-    "strCond": "0",
-    "natType": "",
-    "strType": "0",
-    "strText": "포장마차"
-}
+def croll(s: str):
+    # URL 설정 및 폼 데이터 정의
+    url = "https://www.tjmedia.com/tjsong/song_search_list.asp"
+    data = {
+        "searchOrderItem": "",
+        "searchOrderType": "",
+        "strCond": "0",
+        "natType": "",
+        "strType": "0",
+        "strText": f"{s}"
+    }
 
-# POST 요청으로 HTML 가져오기
-response = requests.post(url, data=data)
-response.encoding = 'utf-8'  # 한글 깨짐 방지
-html = response.text
+    # POST 요청으로 HTML 가져오기
+    response = requests.post(url, data=data)
+    response.encoding = 'utf-8'  # 한글 깨짐 방지
+    html = response.text
 
-# BeautifulSoup으로 HTML 파싱
-soup = BeautifulSoup(html, "html.parser")
+    # BeautifulSoup으로 HTML 파싱
+    soup = BeautifulSoup(html, "html.parser")
 
-# 첫 번째 #BoardType1 테이블 가져오기
-table = soup.select_one("#BoardType1 > table")  # 첫 번째 테이블 선택
+    # 첫 번째 #BoardType1 테이블 가져오기
+    table = soup.select_one("#BoardType1 > table")  # 첫 번째 테이블 선택
 
-# 테이블의 tbody > tr 가져오기
-rows = table.select("tbody > tr") if table else []
+    # 테이블의 tbody > tr 가져오기
+    rows = table.select("tbody > tr") if table else []
 
-# 데이터 출력
-for row in rows:
-    columns = [col.get_text(strip=True) for col in row.find_all("td")]
-    print(columns)
+    searchList = []
+    # 데이터 출력
+    for row in rows:
+        columns = [col.get_text(strip=True) for col in row.find_all("td")]
+        print(columns)
+        if(not len(columns)): continue
+        searchList.append(columns)
+
+
+
+    return searchList

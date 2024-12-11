@@ -1,4 +1,6 @@
 from django.db import models
+from ninja import Schema
+
 
 # Create your models here.
 class Music(models.Model):
