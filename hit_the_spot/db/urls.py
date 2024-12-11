@@ -26,18 +26,15 @@ def get_musics(request):
 @router.get("search")
 def search(request, a:str):
     if(Music.objects.filter(title__icontains=a).count() > 0):
+        musics = Music.objects.filter(title__icontains=a)
         result = [
-            {
-                "number": music.number,
-                "title": music.title,
-                "singer": music.singer,
-                "composer": music.composer,
-                "star": music.star,
-            }
-            for music in Music.objects.filter(title__icontains=a).all()
+            [str(music.number), music.title, music.singer, music.composer, music.star, '']
+            for music in musics
         ]
+        print(type(result), result)
     else:
         result = croll(a)
+        print(type(result), result)
 
     return {"searchRes": result}
 
